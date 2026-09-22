@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { ArrowDown, Truck, ShieldCheck, Sparkles } from "lucide-react";
+import { getAssetUrl } from "@/lib/utils";
 
 const HERO_IMAGE =
   "/images/products/tranh-treo-tuong-mandala-chu-phuc.jpg";
@@ -59,7 +60,7 @@ export function HeroSection() {
         {/* Image Column */}
         <div className="relative aspect-[4/5] lg:aspect-square rounded-2xl overflow-hidden shadow-float border border-stone-200/60 bg-stone-100">
           <Image
-            src={HERO_IMAGE}
+            src={getAssetUrl(HERO_IMAGE)}
             alt="Xương lá bồ đề nghệ thuật"
             fill
             priority

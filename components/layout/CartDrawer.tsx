@@ -17,7 +17,7 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { useCartStore } from "@/store/cart";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, getAssetUrl } from "@/lib/utils";
 
 const HOTLINE = "0915.883.318";
 const HOTLINE_TEL = "tel:0915883318";
@@ -169,7 +169,7 @@ export function CartDrawer() {
                       >
                         <div className="relative w-20 h-24 rounded-lg overflow-hidden bg-stone-100 flex-none border border-stone-100">
                           <Image
-                            src={item.imageUrls[0]}
+                            src={getAssetUrl(item.imageUrls[0])}
                             alt={item.name}
                             fill
                             sizes="80px"

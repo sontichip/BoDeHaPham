@@ -7,7 +7,7 @@ import { getProductBySlug, getProductsByCategory, PRODUCTS } from "@/lib/mock-da
 import { CATEGORY_LABELS } from "@/types";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductActions } from "@/components/ProductActions";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, getAssetUrl } from "@/lib/utils";
 
 // Hỗ trợ Static Export cho GitHub Pages
 export function generateStaticParams() {
@@ -69,7 +69,7 @@ export default function ProductPage({ params }: PageProps) {
         <div className="space-y-4">
           <div className="relative aspect-[4/5] bg-stone-100 rounded-lg overflow-hidden border border-stone-200/60 shadow-sm">
             <Image
-              src={product.imageUrls[0]}
+              src={getAssetUrl(product.imageUrls[0])}
               alt={product.name}
               fill
               priority
@@ -91,7 +91,7 @@ export default function ProductPage({ params }: PageProps) {
               {product.imageUrls.slice(1).map((url, i) => (
                 <div key={i} className="relative aspect-square bg-stone-100 rounded-md overflow-hidden border border-stone-200/60 cursor-pointer hover:border-accent transition-colors">
                   <Image
-                    src={url}
+                    src={getAssetUrl(url)}
                     alt={`${product.name} - ảnh ${i + 2}`}
                     fill
                     sizes="(max-width: 1024px) 25vw, 12vw"

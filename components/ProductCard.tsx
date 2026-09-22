@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ShoppingCart, Star } from "lucide-react";
 import type { Product } from "@/types";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, getAssetUrl } from "@/lib/utils";
 import { useCartStore } from "@/store/cart";
 
 interface ProductCardProps {
@@ -32,7 +32,7 @@ export const ProductCard = memo(function ProductCard({ product }: ProductCardPro
       >
         <div className="absolute inset-0 transition-transform duration-500 ease-out group-hover:scale-105">
           <Image
-            src={product.imageUrls[0]}
+            src={getAssetUrl(product.imageUrls[0])}
             alt={product.name}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
