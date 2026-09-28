@@ -12,25 +12,35 @@ export function formatPrice(price: number): string {
   }).format(price);
 }
 
-const GITHUB_CDN_BASE = 'https://raw.githubusercontent.com/sontichip/BoDeHaPham/main/public';
+// Sử dụng domain GitHub Pages trực tiếp thay vì raw.githubusercontent.com
+// vì raw.githubusercontent.com bị một số nhà mạng tại Việt Nam (Viettel, VNPT) chặn DNS/IP
+const GITHUB_PAGES_BASE = 'https://sontichip.github.io/BoDeHaPham';
 
-/**
- * Chuyển đổi đường dẫn ảnh:
- * - Ảnh ngoài (Unsplash): giữ nguyên
- * - Ảnh nội bộ (/images/products/...):
- *   + Khi deploy production: tải trực tiếp từ GitHub CDN (raw.githubusercontent.com)
- *     giúp tải mượt mà, siêu tốc, không bao giờ bị lỗi 404 do đường dẫn con của GitHub Pages
- *   + Khi chạy dev local: dùng đường dẫn tĩnh gốc
- */
 export function getAssetUrl(src: string): string {
   if (!src) return '';
+  
+  // Nếu là ảnh ngoài Unsplash thì giữ nguyên
+  if (src.startsWith('https://images.unsplash.com')) {
+    return src;
+  }
+
+  // Nếu là link raw.githubusercontent.com bị chặn ở VN, chuyển sang GitHub Pages
+  if (src.includes('raw.githubusercontent.com/sontichip/BoDeHaPham/main/public')) {
+    return src.replace(
+      'https://raw.githubusercontent.com/sontichip/BoDeHaPham/main/public',
+      GITHUB_PAGES_BASE
+    );
+  }
+
   if (src.startsWith('http://') || src.startsWith('https://')) {
     return src;
   }
+
   const cleanPath = src.startsWith('/') ? src : `/${src}`;
   
+  // Khi build production cho GitHub Pages
   if (process.env.NODE_ENV === 'production' || process.env.NEXT_PUBLIC_BASE_PATH || process.env.GITHUB_ACTIONS) {
-    return `${GITHUB_CDN_BASE}${cleanPath}`;
+    return `${GITHUB_PAGES_BASE}${cleanPath}`;
   }
 
   return cleanPath;
